@@ -19,31 +19,21 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="albums")
-public class Album {
+@Table(name="artists")
+public class Artist {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Size(min=3, max=25)
-	private String title;
-	
-	@Size(min=1, max=25)
-	private String artist;
+	@Size(min=3, max=50)
+	private String name;
 	
 	@NotEmpty
-	private int year;
-	
-	@OneToMany(mappedBy="album", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-	private List<Track> track;
-	
-	@OneToMany(mappedBy="album", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-	private List<AlbumArtist> albumArtist;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="user_id") //{entity}_{attribute}
-	private User user;
+	private Boolean gender;
+
+	@OneToMany(mappedBy="artist", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<AlbumArtist> albumArtist;	
 	
 	@Column(updatable=false)
     private Date createdAt;
@@ -57,31 +47,31 @@ public class Album {
     protected void onUpdate(){
         this.updatedAt = new Date();
     }
-	
-	// getter setter
+ 
+    // getter setter
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
-    public String getArtist() {
-		return artist;
+	public Boolean getGender() {
+		return gender;
 	}
-	public void setArtist(String artist) {
-		this.artist = artist;
+	public void setGender(Boolean gender) {
+		this.gender = gender;
 	}
-	public int getYear() {
-		return year;
+	public List<AlbumArtist> getAlbumArtist() {
+		return albumArtist;
 	}
-	public void setYear(int year) {
-		this.year = year;
+	public void setAlbumArtist(List<AlbumArtist> albumArtist) {
+		this.albumArtist = albumArtist;
 	}
 	public Date getCreatedAt() {
 		return createdAt;
@@ -94,26 +84,9 @@ public class Album {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}	
-	public List<Track> getTrack() {
-		return track;
-	}
-	public void setTrack(List<Track> track) {
-		this.track = track;
-	}
-	public List<AlbumArtist> getAlbumArtist() {
-		return albumArtist;
-	}
-	public void setAlbumArtist(List<AlbumArtist> albumArtist) {
-		this.albumArtist = albumArtist;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 	
+	
 	// constructor
-	public Album () {}
+	public Artist () {}
 }

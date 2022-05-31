@@ -1,7 +1,5 @@
 package com.example.demo.controllers;
 
-import java.util.*;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +13,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.models.Album;
-import com.example.demo.models.AlbumArtist;
+import com.example.demo.models.Artist;
 import com.example.demo.models.Track;
-import com.example.demo.services.AlbumService;
 import com.example.demo.services.ArtistService;
 
 @Controller
-@RequestMapping("album")
-public class AlbumController {
+@RequestMapping("Artist")
+public class ArtistController {
 	
 	@Autowired
-	private AlbumService service;
-	
-	@Autowired
-	private ArtistService artistService;
+	private ArtistService service;
 	
 	// home
 	@GetMapping("/")
@@ -39,13 +32,13 @@ public class AlbumController {
 
 	// add
 	@GetMapping("/add")
-	public String getAddForm(@ModelAttribute("item") Album item) {
+	public String getAddForm(@ModelAttribute("item") Artist item) {
 		return "add.jsp";
 	}
 	
 	@PostMapping("/add")
 	public String add(
-			@Valid @ModelAttribute("item") Album item,
+			@Valid @ModelAttribute("item") Artist item,
 			BindingResult result,
 			RedirectAttributes redirectAttributes
 			) {
@@ -65,8 +58,7 @@ public class AlbumController {
 			@PathVariable Long id,
 			Model model
 			) {
-
-		model.addAttribute("album", this.service.retrieve(id));
+		model.addAttribute("Artist", this.service.retrieve(id));
 		
 		return "view.jsp";
 	}
@@ -77,33 +69,15 @@ public class AlbumController {
 			@PathVariable Long id,
 			Model model
 			) {
-		
-		Album album = this.service.retrieve(id);
-		if ( album == null ) return "redirect:/dashboard";
-		
-		model.addAttribute("album", this.service.retrieve(id));
+		model.addAttribute("Artist", this.service.retrieve(id));
 		model.addAttribute("track", new Track());
-		
-		if ( album.getAlbumArtist().size() > 0 ) {
-			List<Long> excludedArtists = new ArrayList<Long>();
-			
-			for ( AlbumArtist albumArtist : album.getAlbumArtist() ) {
-				excludedArtists.add(albumArtist.getArtist().getId());
-			}
-			
-			model.addAttribute("artist", this.artistService.allExcluding(excludedArtists));
-		} else {
-			model.addAttribute("artist", this.artistService.getAll());
-		}	
-		
-		model.addAttribute("artist", this.service.getAll());
 		
 		return "edit.jsp";
 	}
 
 	@PostMapping("/update/{id}")
 	public String update(
-			@Valid @ModelAttribute("item") Album item,
+			@Valid @ModelAttribute("item") Artist item,
 			BindingResult result,
 			RedirectAttributes redirectAttributes
 			) {
