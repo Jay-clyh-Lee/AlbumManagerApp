@@ -25,7 +25,7 @@ public class TrackController {
 
 	// add
 	@GetMapping("/add/{album_id}")
-	public String getGetForm(@ModelAttribute("item") Track item) {
+	public String getAddForm(@ModelAttribute("item") Track item) {
 		return "add.jsp";
 	}
 	

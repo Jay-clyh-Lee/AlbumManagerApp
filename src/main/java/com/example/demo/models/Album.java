@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -35,6 +37,10 @@ public class Album {
 	
 	@OneToMany(mappedBy="album", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Track> track;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="user_id") //{entity}_{attribute}
+	private User user;
 	
 	@Column(updatable=false)
     private Date createdAt;

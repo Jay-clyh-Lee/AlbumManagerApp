@@ -32,7 +32,7 @@ public class AlbumController {
 
 	// add
 	@GetMapping("/add")
-	public String getGetForm(@ModelAttribute("item") Album item) {
+	public String getAddForm(@ModelAttribute("item") Album item) {
 		return "add.jsp";
 	}
 	
